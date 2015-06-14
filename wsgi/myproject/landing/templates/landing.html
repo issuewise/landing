@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>Issuewise</title>
+{% load staticfiles %}
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="{% static 'landing/reset.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'landing/base.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'landing/landing.css' %}"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+var stepsopen=false;
+
+function slideOpen()
+{
+	$('.steps').addClass('steps-open');
+	$('#landing-text').css('height','90%');	
+	$('#arrow').addClass('arrow-rotated');
+	stepsopen=true;
+}
+
+function slideClose()
+{
+	$('.steps').removeClass('steps-open');
+	$('#landing-text').css('height','630px');	
+	$('#arrow').removeClass('arrow-rotated');
+	stepsopen=false;
+}
+
+function slideToggle()
+{
+	if(stepsopen)
+		slideClose();
+	else
+		slideOpen();
+}
+
+$(function() {
+    $('#email-form').submit(function() {
+        // kick off AJAX
+        $.ajax({
+            url: $(location).attr('href') + 'emails/', //CHANGE THIS. However, changing this may cause the page to reload and the success message to not show.
+            type: 'post',
+            data: {email : $(this).find('input[name="email"]').val()},
+            success: function() {
+                // AJAX request finished, return success message
+		        $("#email-message").fadeOut(function () {
+		            $("#email-message").text('E-mail submitted.');
+		            $("#email-message").css('color','#ff9955').fadeIn();
+		        });
+            }
+        });
+        return false;
+    });
+});
+
+</script>
+</head>
+<body>
+<div id='landing-text'>
+	<div class="icon-text">
+	    <p class='main-text'>
+		    We're building
+		    <span class='logo-text'>
+				<span class='logo-issue'>issue</span>
+				<span class='logo-wise'>wise</span>
+			</span>.
+		</p>
+		<p class="description">An open platform for generating collaborative answers<br>to socio-political issues.</p>
+	</div>
+    <br><br><br>
+    <p class='top-opener'><span>How does<br>it work?</span></p>
+    <div class="steps">
+		<p><span class="number">1</span>&ensp;Ask a question about a real world<br>political or social issue.</p>
+		<br><br>
+    	<img style="width: 3em" src="{% static 'landing/images/question.png' %}">
+    	<br><br><br>
+		<p><span class="number">2</span>&ensp;Individuals offer varying opinions.</p>
+		<br><br>
+		<img style="width: 13em" src="{% static 'landing/images/answer1.png' %}">
+		<br><br><br>
+		<p><span class="number">3</span>&ensp;Similar viewpoints cluster.</p>
+		<br><br>
+		<img style="width: 13em" src="{% static 'landing/images/answer2.png' %}">
+		<br><br><br>
+		<p><span class="number">4</span>&ensp;Collaboration creates rich,<br>interconnected solutions.</p>
+		<br><br>
+		<img style="width: 13em" src="{% static 'landing/images/answer3.png' %}">
+		<br><br><br>
+		<p><span class="number">5</span>&ensp;The world is a wiser place.</p>		
+	</div>
+    <div class="bottom-opener">
+    	<div class='arrow-button'>
+    		<img onclick="slideToggle();" id="arrow" src="{% static 'landing/images/arrow1.png' %}">
+    	</div>
+    </div>
+    <br><br><br>
+    <p id='email-message'>Want to stay updated? Leave your e-mail.</p>
+    <form id="email-form" action="">
+		<input id="email" name ="email" type="email" placeholder="e-mail">
+		<input type="submit" value="Submit">
+	</form>
+	<br><br><br>
+	<p class="links">
+		<a href="https://www.facebook.com/groups/issuewise">facebook</a>&middot;
+		<a href="http://blog.issuewise.org">blog</a>&middot;
+		<a href="http://guidelines.issuewise.org">guidelines</a>
+	</p>
+</div>
+</body>
+</html>
