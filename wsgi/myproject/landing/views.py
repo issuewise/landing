@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from landing.models import Email 
 
@@ -10,6 +10,8 @@ def email(request):
     email = request.POST.get('email')
     try:
         Email.objects.get(email=email)
+    except MultipleObjectsReturned:
+        pass
     except ObjectDoesNotExist:
         ip = request.META['REMOTE_ADDR']
         browser = request.META['HTTP_USER_AGENT']
