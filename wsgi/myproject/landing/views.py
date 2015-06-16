@@ -1,16 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 
 from landing.models import Email 
 
 # Create your views here.
 
 def email(request):
-    print request.POST
     email = request.POST.get('email')
-    ip = request.META['REMOTE_ADDR']
-    browser = request.META['HTTP_USER_AGENT']
-    Email.objects.create(email = email, ip = ip, browser = browser)
+    try:
+        Email.objects.get(email=email)
+    except ObjectDoesNotExist:
+        ip = request.META['REMOTE_ADDR']
+        browser = request.META['HTTP_USER_AGENT']
+        Email.objects.create(email = email, ip = ip, browser = browser)
     return HttpResponse('')
     
     
