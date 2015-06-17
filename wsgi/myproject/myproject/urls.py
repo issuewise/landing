@@ -13,10 +13,10 @@ urlpatterns = patterns('',
         view =  TemplateView.as_view(template_name='landing.html'),
         name = 'landing',
         ),
-    url(
-        r'^admin/', 
-        include(admin.site.urls)
-        ),
+    #url(
+    #    r'^admin/', 
+    #    include(admin.site.urls)
+    #    ),
     url(
         regex = r'^emails',
         view = email,
