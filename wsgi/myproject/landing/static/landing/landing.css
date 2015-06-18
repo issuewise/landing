@@ -101,7 +101,7 @@ a:hover img
 
 .arrow-button
 {
-	background-image: url('arrow.png');
+	background-image: url('arrow-button.png');
 	background-size: cover;
 	text-align: center;
 	display: inline-block;
